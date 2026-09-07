@@ -1,0 +1,57 @@
+/* ===== Input Guide panel (data entry pages) ===== */
+
+/* Phones / small tablets: keep the guide compact and prevent the page
+   from stretching sideways. Wide content (e.g., the WHO Z-score table)
+   scrolls horizontally inside the panel instead of breaking layout. */
+@media (max-width: 767.98px) {
+  .input-guide {
+    padding: 0.75rem 0.9rem;
+    border-radius: 10px;
+    font-size: 0.84rem;
+    overflow-wrap: break-word;
+  }
+
+  .input-guide strong {
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+
+  .input-guide ul,
+  .input-guide ol {
+    padding-left: 1.15rem !important;
+  }
+
+  .input-guide li {
+    margin-bottom: 0.4rem;
+    line-height: 1.45;
+  }
+
+  .input-guide li:last-child {
+    margin-bottom: 0;
+  }
+
+  .input-guide li > ul {
+    margin-top: 0.35rem;
+  }
+
+  /* Scrollable table wrapper */
+  .input-guide .table-responsive {
+    border-radius: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  /* Force a comfortable min width so columns stay readable while
+     scrolling, instead of being squished on narrow screens */
+  .input-guide .table-responsive .table {
+    min-width: 540px;
+    font-size: 0.72rem;
+    margin-bottom: 0;
+  }
+
+  .input-guide .table-responsive .table th,
+  .input-guide .table-responsive .table td {
+    padding: 0.4rem 0.5rem;
+    vertical-align: top;
+  }
+}

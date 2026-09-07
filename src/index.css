@@ -1,0 +1,24 @@
+/* Bootstrap is already imported, this is for custom styles */
+
+
+
+.container-main {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* Custom card styles */
+.card-shadow {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Table styles */
+.table-hover tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+/* Status badges */
+.badge-status {
+  padding: 0.5rem 0.75rem;
+  font-weight: 500;
+}

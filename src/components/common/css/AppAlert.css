@@ -1,0 +1,96 @@
+.app-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1px solid;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.app-alert-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.app-alert-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.app-alert-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.app-alert-title {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+
+.app-alert-close {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  padding: 2px;
+  cursor: pointer;
+  line-height: 0;
+  color: inherit;
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+
+.app-alert-close:hover {
+  opacity: 1;
+}
+
+.app-alert-close svg {
+  width: 16px;
+  height: 16px;
+}
+
+.app-alert-success {
+  color: #0b5a43;
+  background: #e1f5ee;
+  border-color: #b6e3d2;
+}
+
+.app-alert-success .app-alert-icon {
+  color: #0f6e56;
+}
+
+.app-alert-danger {
+  color: #8c2f2f;
+  background: #fdecec;
+  border-color: #f5c6c6;
+}
+
+.app-alert-danger .app-alert-icon {
+  color: #d14343;
+}
+
+.app-alert-warning {
+  color: #7a5a00;
+  background: #fff6dd;
+  border-color: #f0dc9e;
+}
+
+.app-alert-warning .app-alert-icon {
+  color: #b97f00;
+}
+
+.app-alert-info {
+  color: #0b4f66;
+  background: #e8f4f9;
+  border-color: #c2e2ef;
+}
+
+.app-alert-info .app-alert-icon {
+  color: #1c7ca6;
+}

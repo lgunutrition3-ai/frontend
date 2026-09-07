@@ -1,0 +1,168 @@
+/* =====================================================
+   Admin Staff page design (matches dashboard system)
+   ===================================================== */
+.admin-staff-page {
+  padding-top: 8px;
+  padding-bottom: 48px;
+}
+
+.admin-staff-header {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0B4F4A 0%, #0A423E 55%, #11635b 100%);
+  color: #F5F1E8;
+  padding: 24px 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 12px 32px rgba(11, 79, 74, 0.28);
+  margin-bottom: 24px;
+}
+
+.admin-staff-header::before,
+.admin-staff-header::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(227, 160, 8, 0.12);
+}
+
+.admin-staff-header::before {
+  width: 220px;
+  height: 220px;
+  right: -60px;
+  top: -80px;
+}
+
+.admin-staff-header::after {
+  width: 120px;
+  height: 120px;
+  right: 130px;
+  bottom: -60px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.admin-staff-header .admin-staff-header-logo {
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 3px solid rgba(245, 241, 232, 0.25);
+  flex-shrink: 0;
+  background: #F5F1E8;
+  position: relative;
+  z-index: 1;
+}
+
+.admin-staff-header .admin-staff-header-body {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.admin-staff-header .admin-staff-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0;
+  color: #F5F1E8;
+  letter-spacing: -0.01em;
+}
+
+.admin-staff-header .admin-staff-subtitle {
+  color: rgba(245, 241, 232, 0.75);
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+}
+
+/* Toolbar */
+.admin-staff-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.admin-staff-search {
+  position: relative;
+  width: 300px;
+}
+
+.admin-staff-search .search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9aa4b2;
+  pointer-events: none;
+}
+
+.admin-staff-search .form-control {
+  padding-left: 40px;
+}
+
+.admin-staff-add-btn {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Password show/hide toggle */
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-input-wrapper .form-control {
+  padding-right: 45px;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0;
+  color: #6c757d;
+  border: none;
+  background: transparent;
+  z-index: 10;
+}
+
+.password-toggle-btn:hover {
+  color: #198754;
+  background: transparent;
+}
+
+.password-toggle-btn:focus {
+  box-shadow: none;
+}
+
+@media (max-width: 575.98px) {
+  .admin-staff-search {
+    width: 100%;
+  }
+
+  .admin-staff-add-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .admin-staff-header {
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .admin-staff-header .admin-staff-header-logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .admin-staff-title {
+    font-size: 1.3rem !important;
+  }
+}

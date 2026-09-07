@@ -1,0 +1,395 @@
+/* =====================================================
+   Theme system
+   - Light / Dark mode via [data-theme]
+   - Accent color via [data-accent]
+   - Works with Bootstrap 5.3 dark mode (data-bs-theme)
+   ===================================================== */
+
+:root {
+  --app-bg: #f4f7f5;
+  --app-surface: #ffffff;
+  --app-surface-2: #f8faf9;
+  --app-surface-3: #f1f5f3;
+  --app-text: #17312c;
+  --app-text-muted: #7a8698;
+  --app-border: #e4e9e6;
+  --app-border-strong: #ced6d2;
+
+  --accent: #2E8B6F;
+  --accent-hover: #1F6A53;
+  --accent-soft: rgba(46, 139, 111, 0.14);
+  --accent-contrast: #ffffff;
+  --accent-rgb: 46, 139, 111;
+}
+
+[data-accent="ocean"] {
+  --accent: #2563EB;
+  --accent-hover: #1D4ED8;
+  --accent-soft: rgba(37, 99, 235, 0.14);
+  --accent-contrast: #ffffff;
+  --accent-rgb: 37, 99, 235;
+}
+
+[data-accent="amber"] {
+  --accent: #D9930C;
+  --accent-hover: #B67A06;
+  --accent-soft: rgba(217, 147, 12, 0.16);
+  --accent-contrast: #1A1200;
+  --accent-rgb: 217, 147, 12;
+}
+
+[data-accent="rose"] {
+  --accent: #D1455B;
+  --accent-hover: #B03549;
+  --accent-soft: rgba(209, 69, 91, 0.14);
+  --accent-contrast: #ffffff;
+  --accent-rgb: 209, 69, 91;
+}
+
+[data-accent="violet"] {
+  --accent: #6D5BD0;
+  --accent-hover: #5747B8;
+  --accent-soft: rgba(109, 91, 208, 0.14);
+  --accent-contrast: #ffffff;
+  --accent-rgb: 109, 91, 208;
+}
+
+/* ---------- Dark mode tokens ---------- */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --app-bg: #0f151b;
+  --app-surface: #171f27;
+  --app-surface-2: #1e2832;
+  --app-surface-3: #25313d;
+  --app-text: #e3eae7;
+  --app-text-muted: #93a2b0;
+  --app-border: #2a3742;
+  --app-border-strong: #3a4a58;
+}
+
+[data-theme="dark"] body {
+  background: var(--app-bg);
+}
+
+/* ---------- App shell / page backgrounds ---------- */
+.app-shell {
+  min-height: 100vh;
+  background: var(--app-bg);
+  transition: background 0.2s ease;
+}
+
+[data-theme="dark"] .bg-light {
+  background-color: var(--app-surface-2) !important;
+}
+
+[data-theme="dark"] .bg-white {
+  background-color: var(--app-surface) !important;
+}
+
+/* ---------- Cards ---------- */
+[data-theme="dark"] .card {
+  background-color: var(--app-surface);
+  border-color: var(--app-border);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .card-header,
+[data-theme="dark"] .card-footer {
+  background-color: var(--app-surface-2);
+  border-color: var(--app-border);
+  color: var(--app-text);
+}
+
+[data-theme="dark"] .card-body {
+  color: var(--app-text);
+}
+
+/* ---------- Tables ---------- */
+[data-theme="dark"] .table {
+  --bs-table-bg: var(--app-surface);
+  --bs-table-color: var(--app-text);
+  --bs-table-border-color: var(--app-border);
+  --bs-table-striped-bg: var(--app-surface-2);
+  --bs-table-hover-bg: var(--app-surface-3);
+}
+
+[data-theme="dark"] .table thead th {
+  color: var(--app-text-muted);
+}
+
+/* ---------- Dashboard ---------- */
+[data-theme="dark"] .dashboard-section-title {
+  color: var(--app-text-muted);
+}
+
+[data-theme="dark"] .dashboard-section-title::after {
+  background: var(--app-border);
+}
+
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .chart-card,
+[data-theme="dark"] .dashboard-table-card {
+  background: var(--app-surface);
+  border-color: var(--app-border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] .stat-card .stat-value {
+  color: var(--app-text);
+}
+
+[data-theme="dark"] .stat-card .stat-label {
+  color: var(--app-text-muted);
+}
+
+[data-theme="dark"] .chart-card-title,
+[data-theme="dark"] .dashboard-table-card .table-card-header h5 {
+  color: var(--app-text);
+}
+
+[data-theme="dark"] .chart-card-title i {
+  color: var(--accent);
+}
+
+[data-theme="dark"] .dashboard-table-card .table-card-header {
+  border-bottom-color: var(--app-border);
+}
+
+[data-theme="dark"] .dashboard-table thead th {
+  background: var(--app-surface-2);
+  color: var(--app-text-muted);
+  border-bottom-color: var(--app-border);
+}
+
+[data-theme="dark"] .dashboard-table tbody td {
+  color: var(--app-text);
+  border-bottom-color: var(--app-border);
+}
+
+[data-theme="dark"] .dashboard-table tbody tr:hover {
+  background: var(--app-surface-2);
+}
+
+[data-theme="dark"] .chart-empty {
+  color: var(--app-text-muted);
+}
+
+/* ---------- Layouts / sidebars ---------- */
+[data-theme="dark"] .staff-layout {
+  background: var(--app-bg);
+}
+
+[data-theme="dark"] .report-layout,
+[data-theme="dark"] .report-content {
+  background: var(--app-bg);
+}
+
+[data-theme="dark"] .report-sidebar {
+  background: var(--app-surface);
+  border-right-color: var(--app-border);
+}
+
+[data-theme="dark"] .report-sidebar::-webkit-scrollbar-track {
+  background: var(--app-surface);
+}
+
+[data-theme="dark"] .report-sidebar::-webkit-scrollbar-thumb {
+  background: var(--app-border-strong);
+}
+
+[data-theme="dark"] .overall-report-sidebar {
+  background: var(--app-surface);
+}
+
+[data-theme="dark"] .overall-report-sidebar .sidebar-header {
+  background: var(--app-surface-2);
+  border-bottom-color: var(--app-border);
+}
+
+[data-theme="dark"] .overall-report-sidebar .sidebar-title,
+[data-theme="dark"] .overall-report-sidebar .sidebar-title-collapsed {
+  color: var(--accent);
+}
+
+[data-theme="dark"] .overall-report-sidebar .sidebar-link {
+  color: var(--app-text);
+}
+
+[data-theme="dark"] .overall-report-sidebar .sidebar-link:hover {
+  background: var(--app-surface-2);
+  color: var(--accent);
+}
+
+[data-theme="dark"] .overall-report-sidebar .sidebar-link.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+
+[data-theme="dark"] .overall-report-sidebar .section-title {
+  color: var(--app-text-muted);
+}
+
+[data-theme="dark"] .overall-report-sidebar .collapse-toggle-btn {
+  background: var(--app-surface);
+  border-color: var(--app-border);
+  color: var(--app-text);
+}
+
+[data-theme="dark"] .overall-report-sidebar .collapse-toggle-btn:hover {
+  background: var(--app-surface-2);
+}
+
+[data-theme="dark"] .barangay-report-layout,
+[data-theme="dark"] .barangay-report-layout .content-wrapper {
+  background: var(--app-bg);
+}
+
+[data-theme="dark"] .report-mobile-label {
+  color: var(--accent);
+}
+
+/* ---------- Record table ---------- */
+[data-theme="dark"] .record-table {
+  background: var(--app-surface);
+}
+
+[data-theme="dark"] .record-table tbody td {
+  color: var(--app-text);
+  border-top-color: var(--app-border);
+}
+
+[data-theme="dark"] .record-table tbody tr:nth-child(even) {
+  background-color: var(--app-surface-2);
+}
+
+[data-theme="dark"] .record-table tbody tr:hover {
+  background-color: var(--accent-soft);
+}
+
+[data-theme="dark"] .record-table tbody tr.record-selected {
+  background-color: var(--accent-soft) !important;
+}
+
+[data-theme="dark"] .record-table tbody tr.record-selected td {
+  border-color: var(--app-border);
+}
+
+[data-theme="dark"] .action-btn.action-edit,
+[data-theme="dark"] .action-btn.action-delete {
+  background: transparent;
+}
+
+/* ---------- Name suggestion dropdown ---------- */
+[data-theme="dark"] .name-suggestion-dropdown {
+  background: var(--app-surface);
+  border-color: var(--app-border);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .name-suggestion-item {
+  color: var(--app-text);
+  border-bottom-color: var(--app-border);
+}
+
+[data-theme="dark"] .name-suggestion-item:hover,
+[data-theme="dark"] .name-suggestion-item:focus {
+  background: var(--app-surface-2);
+}
+
+/* ---------- Alerts / overlays ---------- */
+[data-theme="dark"] .app-alert-success {
+  color: #8fe0c4;
+  background: rgba(15, 110, 86, 0.22);
+  border-color: #1f6a53;
+}
+
+[data-theme="dark"] .app-alert-danger {
+  color: #f0a3a3;
+  background: rgba(209, 67, 67, 0.18);
+  border-color: #8c2f2f;
+}
+
+[data-theme="dark"] .app-alert-warning {
+  color: #f0d285;
+  background: rgba(185, 127, 0, 0.18);
+  border-color: #7a5a00;
+}
+
+[data-theme="dark"] .app-alert-info {
+  color: #9ed2ea;
+  background: rgba(28, 124, 166, 0.2);
+  border-color: #0b4f66;
+}
+
+[data-theme="dark"] .loading-overlay-box {
+  background: var(--app-surface);
+  border-color: var(--accent);
+}
+
+[data-theme="dark"] .loading-overlay-text {
+  color: var(--app-text);
+}
+
+/* ---------- Forms ---------- */
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+  color: var(--app-text);
+  background-color: var(--app-surface);
+  border-color: var(--app-border-strong);
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 0.2rem var(--accent-soft);
+}
+
+[data-theme="dark"] .form-label {
+  color: var(--app-text);
+}
+
+[data-theme="dark"] .text-muted {
+  color: var(--app-text-muted) !important;
+}
+
+[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3,
+[data-theme="dark"] h4, [data-theme="dark"] h5, [data-theme="dark"] h6,
+[data-theme="dark"] .card-title {
+  color: var(--app-text);
+}
+
+/* ---------- Accent-driven buttons ---------- */
+.btn-accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.btn-accent:hover,
+.btn-accent:focus {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--accent-contrast);
+}
+
+[data-theme="dark"] .btn-outline-secondary {
+  color: var(--app-text);
+  border-color: var(--app-border-strong);
+}
+
+[data-theme="dark"] .btn-outline-secondary:hover {
+  background: var(--app-surface-2);
+  color: var(--app-text);
+}
+
+/* ---------- Smooth transitions ---------- */
+body,
+.card,
+.card-header,
+.card-body,
+.form-control,
+.form-select,
+.table {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}

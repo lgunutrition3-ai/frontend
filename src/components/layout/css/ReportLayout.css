@@ -1,0 +1,112 @@
+/* components/layout/ReportLayout.css */
+
+/* Layout */
+.report-layout {
+  min-height: 100vh;
+  background: #f8f9fa;
+  overflow-x: hidden;
+}
+
+.report-layout .layout-body {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Report navigation dropdown (visible on all screen sizes) */
+.report-layout .overall-report-mobile-nav {
+  display: block;
+  margin-bottom: 20px;
+  max-width: 360px;
+}
+
+.report-layout .report-mobile-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0B4F4A;
+  margin-bottom: 6px;
+}
+
+/* Content Area */
+.report-layout .content-wrapper {
+  flex: 1;
+  min-width: 0;
+  padding: 20px 24px;
+  min-height: 100vh;
+  background: #f8f9fa;
+  overflow-x: hidden;
+}
+
+.report-layout .content-area {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .report-layout .content-wrapper {
+    padding: 12px 12px;
+  }
+
+  .report-layout .overall-report-mobile-nav {
+    max-width: none;
+  }
+
+  /* Stack all report rows vertically on phones */
+  .report-layout .content-wrapper .row {
+    flex-direction: column;
+  }
+
+  .report-layout .content-wrapper .row > [class*='col'] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 10px;
+  }
+
+  .report-layout .content-wrapper .row > [class*='col']:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Let the report header wrap so the Export button stays on screen */
+  .report-layout .content-wrapper .d-flex.justify-content-between,
+  .report-layout .content-wrapper .d-flex.align-items-center {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* Export button fills its own row on small screens */
+  .report-layout .content-wrapper .btn-success {
+    width: 100%;
+  }
+
+  /* Tighter card padding so tables get the full screen width */
+  .report-layout .content-wrapper .card-body {
+    padding: 0.9rem;
+  }
+
+  /* Wide tables scroll inside the card instead of squishing */
+  .report-layout .content-wrapper .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .report-layout .content-wrapper .table-responsive > .table {
+    white-space: nowrap;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .report-layout h1 {
+    font-size: 1.4rem;
+  }
+
+  .report-layout h4 {
+    font-size: 1.2rem;
+  }
+
+  .report-layout h5 {
+    font-size: 1.05rem;
+  }
+}

@@ -1,0 +1,116 @@
+/* Barangay Report Layout */
+.barangay-report-layout {
+  min-height: 100vh;
+  background: #f8f9fa;
+  overflow-x: hidden;
+}
+
+.barangay-report-layout .layout-body {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Report navigation dropdown */
+.barangay-report-layout .barangay-report-mobile-nav {
+  display: block;
+  margin-bottom: 20px;
+  max-width: 360px;
+}
+
+.barangay-report-layout .report-mobile-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0B4F4A;
+  margin-bottom: 6px;
+}
+
+/* Content Area */
+.barangay-report-layout .content-wrapper {
+  flex: 1;
+  min-width: 0;
+  padding: 20px 24px;
+  min-height: 100vh;
+  background: #f8f9fa;
+  overflow-x: hidden;
+}
+
+.barangay-report-layout .content-area {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .barangay-report-layout .content-wrapper {
+    padding: 12px 12px;
+  }
+
+  .barangay-report-layout .barangay-report-mobile-nav {
+    max-width: none;
+  }
+
+  /* Stack all report rows vertically on phones */
+  .barangay-report-layout .content-wrapper .row {
+    flex-direction: column;
+  }
+
+  .barangay-report-layout .content-wrapper .row > [class*='col'] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  .barangay-report-layout .content-wrapper .row > [class*='col'] {
+    margin-bottom: 10px;
+  }
+  .barangay-report-layout .content-wrapper .row > [class*='col']:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Let the report header wrap so the Export button stays on screen */
+  .barangay-report-layout .content-wrapper .d-flex.justify-content-between,
+  .barangay-report-layout .content-wrapper .d-flex.align-items-center {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* Export button fills its own row on small screens */
+  .barangay-report-layout .content-wrapper .btn-success {
+    width: 100%;
+  }
+
+  /* Tighter card padding so tables get the full screen width */
+  .barangay-report-layout .content-wrapper .card-body {
+    padding: 0.9rem;
+  }
+
+  /* Reduce filter form spacing on phones */
+  .barangay-report-layout .content-wrapper .card .row > [class*='col'] .form-label {
+    margin-bottom: 4px;
+  }
+
+  /* Wide tables scroll inside the card instead of stretching the page */
+  .barangay-report-layout .content-wrapper .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Cells don't wrap, so tables size to their content and scroll
+     horizontally inside the wrapper instead of squishing or
+     blowing out the page width */
+  .barangay-report-layout .content-wrapper .table-responsive > .table {
+    white-space: nowrap;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .barangay-report-layout h4 {
+    font-size: 1.2rem;
+  }
+
+  .barangay-report-layout h5 {
+    font-size: 1.05rem;
+  }
+}

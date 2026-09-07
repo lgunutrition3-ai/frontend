@@ -1,0 +1,113 @@
+.staff-layout {
+  min-height: 100vh;
+  background: #f5f6f8;
+}
+
+/* ===== Content area ===== */
+.content-area {
+  padding: 24px;
+}
+
+/* =====================================================
+   Phone selection mode (reached by long-pressing a row)
+   ===================================================== */
+.staff-select-cancel {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 1600;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 26px;
+  font-size: 14px;
+  font-weight: 700;
+  background: #e53e3e;
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.staff-select-cancel:hover {
+  background: #c53030;
+}
+
+/* =====================================================
+   Mobile / phone responsiveness for data entry pages
+   ===================================================== */
+@media (max-width: 767.98px) {
+  .content-area {
+    padding: 12px;
+  }
+
+  /* Stack every bootstrap Row vertically on phones */
+  .staff-layout .row {
+    flex-direction: column;
+  }
+
+  .staff-layout .row > [class*='col'] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Top selector row (Data Entry + Barangay) */
+  .staff-layout .mb-3.row > [class*='col'] {
+    margin-bottom: 10px;
+  }
+  .staff-layout .mb-3.row > [class*='col']:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Card header: let the search bar + buttons wrap onto separate lines */
+  .staff-layout .card-header .d-flex {
+    flex-wrap: wrap;
+  }
+  .staff-layout .card-header .d-flex .position-relative {
+    flex: 1 0 100%;
+  }
+
+  /* Filter panel: 2 fields per row on phones */
+  .staff-layout .card-body.bg-light .row {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .staff-layout .card-body.bg-light .row > [class*='col'] {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+  }
+
+  /* Pagination footer: stack and center */
+  .staff-layout .card-footer .row > [class*='col'] {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .staff-layout .card-footer .row > [class*='col']:last-child {
+    margin-bottom: 0;
+  }
+  .staff-layout .card-footer .d-flex {
+    flex-wrap: wrap;
+    justify-content: center !important;
+    align-items: center;
+  }
+  .staff-layout .card-footer .pagination {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Wide tables: scroll horizontally inside the card, keep the page fixed */
+  .staff-layout .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Smaller, comfortable headings & buttons */
+  .staff-layout h4 {
+    font-size: 1.2rem;
+  }
+  .staff-layout .btn {
+    font-size: 0.85rem;
+  }
+}

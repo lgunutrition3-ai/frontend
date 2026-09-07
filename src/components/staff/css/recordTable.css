@@ -1,0 +1,204 @@
+/* ===== Record table redesign ===== */
+
+/* Checkbox column:
+   - Laptop/desktop (pointer: fine): always visible
+   - Phones (pointer: coarse): hidden by default, only shown in
+     selection mode (reached by long-pressing a row) */
+.record-table .record-check-head,
+.record-table .record-check-cell {
+  display: table-cell;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .record-table .record-check-head,
+  .record-table .record-check-cell {
+    display: none;
+  }
+
+  .record-select-mode .record-table .record-check-head,
+  .record-select-mode .record-table .record-check-cell {
+    display: table-cell;
+  }
+}
+
+.record-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  background: #fff;
+}
+
+.record-table thead th {
+  background: linear-gradient(135deg, #2f855a 0%, #276749 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.7rem 0.6rem;
+  border: none !important;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.record-table thead th.record-check-head {
+  width: 48px;
+  min-width: 48px;
+  text-align: center;
+}
+
+.record-table tbody td {
+  padding: 0.6rem 0.6rem;
+  vertical-align: middle;
+  border-top: 1px solid #edf0f3;
+  font-size: 0.85rem;
+  color: #2d3748;
+}
+
+.record-table tbody tr {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.record-table tbody tr:nth-child(even) {
+  background-color: #f8faf9;
+}
+
+.record-table tbody tr:hover {
+  background-color: #e6f4ec;
+}
+
+.record-table tbody tr.record-selected {
+  background-color: #d5ecdf !important;
+}
+
+.record-table tbody tr.record-selected td {
+  border-color: #b7dac6;
+}
+
+/* Rounded corners */
+.record-table thead th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.record-table thead th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.record-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.record-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+/* Checkbox cell */
+.record-check-cell {
+  width: 48px;
+  min-width: 48px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.record-check-cell .form-check {
+  padding-left: 0;
+  min-height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.record-check-cell .form-check-input {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: #2f855a;
+}
+
+.record-table thead .form-check-input {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  accent-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: #fff;
+}
+
+/* Action buttons */
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  font-weight: 600;
+  padding: 0.35rem 0.9rem;
+  line-height: 1.4;
+  transition: all 0.15s ease;
+}
+
+.action-btn svg {
+  flex-shrink: 0;
+}
+
+.action-btn.action-edit {
+  color: #2f855a;
+  border-color: #2f855a;
+  background: #fff;
+}
+
+.action-btn.action-edit:hover,
+.action-btn.action-edit:focus {
+  background: #2f855a;
+  color: #fff;
+  border-color: #2f855a;
+}
+
+.action-btn.action-delete {
+  color: #e53e3e;
+  border-color: #e53e3e;
+  background: #fff;
+}
+
+.action-btn.action-delete:hover,
+.action-btn.action-delete:focus {
+  background: #e53e3e;
+  color: #fff;
+  border-color: #e53e3e;
+}
+
+/* Mobile: bigger tap targets */
+@media (max-width: 767.98px) {
+  .record-table thead th {
+    font-size: 0.68rem;
+    padding: 0.6rem 0.4rem;
+  }
+
+  .record-table tbody td {
+    padding: 0.6rem 0.4rem;
+    font-size: 0.78rem;
+  }
+
+  .record-check-cell {
+    width: 44px;
+    min-width: 44px;
+  }
+
+  .record-check-cell .form-check-input {
+    width: 26px;
+    height: 26px;
+  }
+
+  .action-btn {
+    padding: 0.5rem 1.1rem;
+    font-size: 0.95rem;
+  }
+
+  .action-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
