@@ -658,7 +658,7 @@ const ChildRecordsEntry = () => {
                   }}
                   suggestions={records.map((r) => r.fullName).filter(Boolean)}
                   required
-                  placeholder="e.g., Jotojot, Jonathan"
+                  placeholder="Lastname, Firstname"
                 />
               </Col>
             </Row>
@@ -672,7 +672,7 @@ const ChildRecordsEntry = () => {
                     value={formData.motherOrCaregiver}
                     onChange={(e) => setFormData({ ...formData, motherOrCaregiver: e.target.value })}
                     required
-                    placeholder="e.g., DELA CRUZ, MARIA"
+                    placeholder="Lastname, Firstname"
                   />
                 </Form.Group>
               </Col>
@@ -775,7 +775,7 @@ const ChildRecordsEntry = () => {
               </Col>
               <Col md={4}>
                 <Form.Group className="mb-3">
-                  <Form.Label>Nutritional Status</Form.Label>
+                  <Form.Label>Weight-for-Age Status</Form.Label>
                   <Form.Control
                     type="text"
                     value={formData.nutritionalStatus || missingForZ(false) || 'Auto-calculated'}
