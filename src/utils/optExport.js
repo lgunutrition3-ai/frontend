@@ -3,6 +3,7 @@ import { saveAs } from 'file-saver'
 import { getWeightForAgeZScore } from './whoWeightForAge'
 import { getLengthForAgeZScore } from './whoHeightForAge'
 import { getWeightForLengthHeightZScore } from './whoWeightForLengthHeight'
+import { formatDate } from './formatDate'
 import nutritionLogo from '../assets/nutritionlogo.jpg'
 
 // OPT Plus status codes (per DOH OPT Plus workbook conventions):
@@ -40,9 +41,7 @@ export function getWfhStatusCode(record) {
 const sexCode = (sex) => (sex === 'Male' ? 'M' : sex === 'Female' ? 'F' : '')
 const purokLabel = (purok) => (purok != null && purok !== '' ? `PUROK ${purok}` : '')
 const fmtDate = (value) => {
-  if (!value) return ''
-  const d = new Date(value)
-  return isNaN(d) ? '' : d.toISOString().split('T')[0]
+  return formatDate(value)
 }
 
 // ---------------------------------------------------------------------------

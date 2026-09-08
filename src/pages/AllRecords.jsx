@@ -28,6 +28,7 @@ import {
   FaPaw
 } from 'react-icons/fa'
 import { exportReportToDocx } from '../utils/docxExport'
+import { formatDate } from '../utils/formatDate'
 
 const AllRecords = () => {
   const { user } = useAuth()
@@ -242,97 +243,45 @@ const AllRecords = () => {
     return details.length > 0 ? details.join(' | ') : '-'
   }
 
+  const getDetailsText = (record) => {
+    switch(record._type) {
+      case 'Animal Raising':
+      case 'Animal Dispersal':
+        const parts = []
+        const totalChicken = (record.chickenMale || 0) + (record.chickenFemale || 0)
+        const totalPig = (record.pigMale || 0) + (record.pigFemale || 0)
+        const totalGoat = (record.goatMale || 0) + (record.goatFemale || 0)
+        const totalCow = (record.cowMale || 0) + (record.cowFemale || 0)
+        const totalCarabao = (record.carabaoMale || 0) + (record.carabaoFemale || 0)
+        if (totalChicken > 0) parts.push(`Chicken: ${totalChicken}`)
+        if (totalPig > 0) parts.push(`Pig: ${totalPig}`)
+        if (totalGoat > 0) parts.push(`Goat: ${totalGoat}`)
+        if (totalCow > 0) parts.push(`Cow: ${totalCow}`)
+        if (totalCarabao > 0) parts.push(`Carabao: ${totalCarabao}`)
+        return parts.length > 0 ? parts.join(', ') : 'No animals'
+      case 'Potable Water':
+        const levels = []
+        if (record.level1) levels.push('Level 1')
+        if (record.level2) levels.push('Level 2')
+        if (record.level3) levels.push('Level 3')
+        return levels.length > 0 ? levels.join(', ') : 'None'
+      case 'Iodized Salt':
+        return getIodizedSaltDetails(record)
+      case 'CR':
+        return record.withCR ? 'With CR' : 'Without CR'
+      case 'Backyard Gardening':
+        return record.hasGarden ? 'Has Garden' : 'No Garden'
+      case 'Pregnant Women':
+        return `BMI: ${record.bmiCategory || '-'}, Weight: ${record.weight || '-'}kg, Height: ${record.height || '-'}cm`
+      case 'Vegetable Seeds':
+        return formatSeedTypes(record.seedTypes)
+      default:
+        return '-'
+    }
+  }
+
   const renderRecordRow = (record, index) => {
     const typeColor = getTypeColor(record._type)
-
-    const renderFields = (record) => {
-      switch(record._type) {
-        case 'Animal Raising':
-        case 'Animal Dispersal':
-          return (
-            <div className="d-flex gap-3 flex-wrap">
-              <span className="badge bg-light text-dark border">
-                🐔 {record.chickenMale || 0}M / {record.chickenFemale || 0}F
-              </span>
-              <span className="badge bg-light text-dark border">
-                🐷 {record.pigMale || 0}M / {record.pigFemale || 0}F
-              </span>
-              <span className="badge bg-light text-dark border">
-                🐐 {record.goatMale || 0}M / {record.goatFemale || 0}F
-              </span>
-              {record._type === 'Animal Raising' && (
-                <>
-                  <span className="badge bg-light text-dark border">
-                    🐄 {record.cowMale || 0}M / {record.cowFemale || 0}F
-                  </span>
-                  <span className="badge bg-light text-dark border">
-                    🐃 {record.carabaoMale || 0}M / {record.carabaoFemale || 0}F
-                  </span>
-                </>
-              )}
-            </div>
-          )
-        case 'Potable Water':
-          return (
-            <div className="d-flex gap-2 flex-wrap">
-              <Badge bg={record.level1 ? 'success' : 'danger'}>
-                {record.level1 ? '✅ L1' : '❌ L1'}
-              </Badge>
-              <Badge bg={record.level2 ? 'success' : 'danger'}>
-                {record.level2 ? '✅ L2' : '❌ L2'}
-              </Badge>
-              <Badge bg={record.level3 ? 'success' : 'danger'}>
-                {record.level3 ? '✅ L3' : '❌ L3'}
-              </Badge>
-            </div>
-          )
-        case 'Iodized Salt':
-          return (
-            <div className="text-start" style={{ fontSize: '0.8rem' }}>
-              {getIodizedSaltDetails(record)}
-            </div>
-          )
-        case 'CR':
-          return (
-            <Badge bg={record.withCR ? 'success' : 'danger'}>
-              {record.withCR ? '✅ With CR' : '❌ Without CR'}
-            </Badge>
-          )
-        case 'Backyard Gardening':
-          return (
-            <Badge bg={record.hasGarden ? 'success' : 'danger'}>
-              {record.hasGarden ? '🌱 Has Garden' : '❌ No Garden'}
-            </Badge>
-          )
-        case 'Pregnant Women':
-          return (
-            <div className="d-flex gap-2 flex-wrap align-items-center">
-              <span className="badge bg-light text-dark border">{record.weight || '-'} kg</span>
-              <span className="badge bg-light text-dark border">{record.height || '-'} cm</span>
-              <Badge bg={record.bmiCategory === 'Normal BMI' || record.bmiCategory === 'Normal' ? 'success' : 
-                        record.bmiCategory === 'Low BMI' || record.bmiCategory === 'Underweight' ? 'warning' : 
-                        record.bmiCategory === 'High BMI' || record.bmiCategory === 'Overweight' ? 'danger' : 'secondary'}>
-                {record.bmiCategory || '-'}
-              </Badge>
-            </div>
-          )
-        case 'Vegetable Seeds':
-          return (
-            <div className="d-flex flex-column gap-1">
-              <span className="text-muted" style={{ fontSize: '0.8rem' }}>
-                {formatSeedTypes(record.seedTypes)}
-              </span>
-              {record.beneficiaries && (
-                <span className="badge bg-success" style={{ width: 'fit-content' }}>
-                  {record.beneficiaries}
-                </span>
-              )}
-            </div>
-          )
-        default:
-          return <span className="text-muted">-</span>
-      }
-    }
 
     const getName = (record) => {
       return record.womanName || record.householdName || record.storeName || record.fullName || '-'
@@ -357,10 +306,10 @@ const AllRecords = () => {
         <td>
           <strong>{getName(record)}</strong>
         </td>
-        <td>{renderFields(record)}</td>
+        <td>{getDetailsText(record)}</td>
         <td className="text-nowrap">
           <small className="text-muted">
-            {record.recordedDate ? new Date(record.recordedDate).toLocaleDateString() : 'N/A'}
+            {formatDate(record.recordedDate)}
           </small>
         </td>
         <td className="text-center">
@@ -386,36 +335,57 @@ const AllRecords = () => {
   }
 
   const handleExportDocx = async () => {
-    const exportData = current.map((record, i) => {
-      let details = ''
-      if (record._type === 'Iodized Salt') {
-        details = getIodizedSaltDetails(record)
-      } else if (record._type === 'Vegetable Seeds') {
-        details = record.beneficiaries ? `${record.beneficiaries} | ${formatSeedTypes(record.seedTypes)}` : formatSeedTypes(record.seedTypes)
-      } else {
-        details = '...'
-      }
+    const recordsToExport = filterRecords(activeTab === 'all' ? getAllRecords() : records[activeTab] || [])
+    
+    if (recordsToExport.length === 0) {
+      alert('No records to export!')
+      return
+    }
+
+    const exportData = recordsToExport.map((record, i) => {
+      const name = record.womanName || record.householdName || record.storeName || record.fullName || '-'
+      const details = getDetailsText(record)
+      const date = formatDate(record.recordedDate)
+      
       return [
         i + 1,
         record._type || '',
         record.barangay || '',
         `Purok ${record.purok || ''}`,
-        record.womanName || record.householdName || record.storeName || record.fullName || '-',
-        details
+        name,
+        details,
+        date,
+        record.recordedBy || '-'
       ]
     })
 
+    const tabName = activeTab === 'all' ? 'All Records' : (records[activeTab]?.[0]?._type || activeTab)
+    const yearDisplay = new Date().getFullYear()
+
     await exportReportToDocx({
-      titleLines: ['All Records Report'],
-      infoLines: [`Generated: ${new Date().toLocaleString()}`],
+      govLines: [
+        'Republic of the Philippines',
+        'Province of Bohol',
+        'Municipality of Ubay',
+        'MUNICIPAL NUTRITION COUNCIL'
+      ],
+      titleLines: [`${tabName.toUpperCase()} REPORT ${yearDisplay}`],
+      infoLines: [
+        selectedBarangay ? `Barangay: ${selectedBarangay}` : 'All Barangays',
+        `Generated: ${new Date().toLocaleString()}`,
+        `Total Records: ${recordsToExport.length}`
+      ],
       infoCenter: true,
-      headers: ['#', 'Type', 'Barangay', 'Purok', 'Name', 'Details'],
+      headers: ['#', 'Type', 'Barangay', 'Purok', 'Name', 'Details', 'Date', 'Recorded By'],
       body: exportData,
       boldLastRow: false,
       cellFontSize: 16,
       orientation: 'landscape',
-      signatures: { left: [], right: [] },
-      fileName: 'All_Records_Report'
+      signatures: {
+        left: [{ label: 'PREPARED BY:', name: '', position: 'MNPC' }],
+        right: [{ label: 'NOTED BY:', name: '', position: 'RN' }]
+      },
+      fileName: `${tabName.replace(/\s/g, '_')}_Report_${yearDisplay}`
     })
   }
 

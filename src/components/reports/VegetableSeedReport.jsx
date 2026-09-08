@@ -5,6 +5,7 @@ import { BARANGAYS } from '../../utils/constants'
 import { Card, Form, Button, Alert, Table, Row, Col, Spinner } from 'react-bootstrap'
 import { exportReportToDocx } from '../../utils/docxExport'
 import nutritionLogo from '../../assets/nutritionlogo.jpg'
+import { formatDate } from '../../utils/formatDate'
 
 const VegetableSeedReport = () => {
   const { user } = useAuth()
@@ -180,7 +181,7 @@ const VegetableSeedReport = () => {
       ],
       infoLines: [
         `BARANGAY: ${barangayName}`,
-        `DATE: ${new Date(report.startDate).toLocaleDateString()} - ${new Date(report.endDate).toLocaleDateString()}`
+        `DATE: ${formatDate(report.startDate)} - ${formatDate(report.endDate)}`
       ],
       headers: [
         'PUROK',
@@ -333,7 +334,7 @@ const VegetableSeedReport = () => {
                 CONSOLIDATED REPORT ON POOR FAMILIES GIVEN VEGETABLE SEEDS CY.{report.year}
               </h5>
               <p className="mb-0"><strong>BARANGAY:</strong> {barangay.toUpperCase()}</p>
-              <p className="mb-0"><strong>DATE:</strong> {new Date(report.startDate).toLocaleDateString()} - {new Date(report.endDate).toLocaleDateString()}</p>
+              <p className="mb-0"><strong>DATE:</strong> {formatDate(report.startDate)} - {formatDate(report.endDate)}</p>
             </div>
 
             <Table bordered responsive className="mb-4">

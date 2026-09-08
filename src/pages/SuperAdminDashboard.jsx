@@ -6,23 +6,69 @@ import StatCard from '../components/dashboard/StatCard'
 import nutritionLogo from '../assets/nutritionlogo.jpg'
 import './css/AdminStaff.css'
 
+const PASSWORD_RULES = [
+  { test: (p) => p.length >= 8, label: 'At least 8 characters' },
+  { test: (p) => /[A-Z]/.test(p), label: 'One uppercase letter' },
+  { test: (p) => /[a-z]/.test(p), label: 'One lowercase letter' },
+  { test: (p) => /[0-9]/.test(p), label: 'One number' },
+  { test: (p) => /[^A-Za-z0-9]/.test(p), label: 'One special character' },
+]
+
+const PasswordStrength = ({ password }) => {
+  if (!password) return null
+  const passed = PASSWORD_RULES.filter((r) => r.test(password)).length
+  const levels = ['Very Weak', 'Weak', 'Fair', 'Strong', 'Very Strong']
+  const colors = ['#dc3545', '#fd7e14', '#ffc107', '#20c997', '#198754']
+  const idx = Math.min(passed, 4)
+  return (
+    <div className="password-strength mt-2">
+      <div className="d-flex align-items-center gap-2 mb-1">
+        <div className="flex-grow-1" style={{ height: '4px', background: '#e9ecef', borderRadius: '2px', overflow: 'hidden' }}>
+          <div style={{ width: `${((idx + 1) / 5) * 100}%`, height: '100%', background: colors[idx], borderRadius: '2px', transition: 'all 0.3s' }} />
+        </div>
+        <small style={{ color: colors[idx], fontWeight: 600, minWidth: '80px' }}>{levels[idx]}</small>
+      </div>
+      <div className="d-flex flex-wrap gap-1">
+        {PASSWORD_RULES.map((rule, i) => (
+          <small key={i} style={{ color: rule.test(password) ? '#198754' : '#6c757d', fontSize: '0.7rem' }}>
+            <i className={`bi ${rule.test(password) ? 'bi-check-circle-fill' : 'bi-circle'} me-1`} style={{ fontSize: '0.6rem' }} />
+            {rule.label}
+          </small>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 const SuperAdminDashboard = () => {
   const { user } = useAuth()
   const [admins, setAdmins] = useState([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [showModal, setShowModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [editItem, setEditItem] = useState(null)
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
     confirmPassword: '',
   })
+  const [editFormData, setEditFormData] = useState({
+    username: '',
+    email: '',
+    newPassword: '',
+    confirmNewPassword: '',
+  })
   const [error, setError] = useState('')
+  const [editError, setEditError] = useState('')
   const [success, setSuccess] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [editSubmitting, setEditSubmitting] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showEditPassword, setShowEditPassword] = useState(false)
+  const [showEditConfirmPassword, setShowEditConfirmPassword] = useState(false)
 
   useEffect(() => {
     fetchAdmins()
@@ -39,6 +85,10 @@ const SuperAdminDashboard = () => {
     }
   }
 
+  const isPasswordStrong = (password) => {
+    return PASSWORD_RULES.every((rule) => rule.test(password))
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
@@ -49,8 +99,13 @@ const SuperAdminDashboard = () => {
       return
     }
 
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters')
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters')
+      return
+    }
+
+    if (!isPasswordStrong(formData.password)) {
+      setError('Password must include uppercase, lowercase, number, and special character')
       return
     }
 
@@ -76,6 +131,61 @@ const SuperAdminDashboard = () => {
       setError(error.response?.data?.message || 'Error creating admin')
     } finally {
       setSubmitting(false)
+    }
+  }
+
+  const handleEdit = (admin) => {
+    setEditItem(admin)
+    setEditFormData({
+      username: admin.username,
+      email: admin.email,
+      newPassword: '',
+      confirmNewPassword: '',
+    })
+    setEditError('')
+    setShowEditModal(true)
+  }
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault()
+    setEditError('')
+
+    if (editFormData.newPassword) {
+      if (editFormData.newPassword !== editFormData.confirmNewPassword) {
+        setEditError('Passwords do not match')
+        return
+      }
+      if (editFormData.newPassword.length < 8) {
+        setEditError('Password must be at least 8 characters')
+        return
+      }
+      if (!isPasswordStrong(editFormData.newPassword)) {
+        setEditError('Password must include uppercase, lowercase, number, and special character')
+        return
+      }
+    }
+
+    setEditSubmitting(true)
+
+    try {
+      const payload = {
+        username: editFormData.username,
+        email: editFormData.email,
+      }
+      if (editFormData.newPassword) {
+        payload.newPassword = editFormData.newPassword
+      }
+
+      await superAdminApi.updateAdmin(editItem.id, payload)
+
+      setSuccess('Admin updated successfully!')
+      setShowEditModal(false)
+      setEditItem(null)
+      fetchAdmins()
+    } catch (error) {
+      setEditError(error.response?.data?.message || 'Error updating admin')
+    } finally {
+      setEditSubmitting(false)
     }
   }
 
@@ -125,7 +235,6 @@ const SuperAdminDashboard = () => {
 
   return (
     <div className="admin-staff-page">
-      {/* Header */}
       <div className="admin-staff-header">
         <img className="admin-staff-header-logo" src={nutritionLogo} alt="Nutrition Logo" />
         <div className="admin-staff-header-body">
@@ -137,7 +246,6 @@ const SuperAdminDashboard = () => {
         </div>
       </div>
 
-      {/* Stat overview */}
       <div className="row g-3 mb-4">
         <div className="col-6 col-lg-4">
           <StatCard title="Total Admins" value={admins.length} color="primary" icon="people-fill" />
@@ -150,7 +258,6 @@ const SuperAdminDashboard = () => {
         </div>
       </div>
 
-      {/* Toolbar */}
       <div className="admin-staff-toolbar">
         <div className="admin-staff-search">
           <i className="bi bi-search search-icon"></i>
@@ -169,7 +276,6 @@ const SuperAdminDashboard = () => {
       {success && <Alert variant="success" onClose={() => setSuccess('')} dismissible>{success}</Alert>}
       {error && <Alert variant="danger" onClose={() => setError('')} dismissible>{error}</Alert>}
 
-      {/* Admin table */}
       <div className="dashboard-table-card">
         <div className="table-card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
           <h5>
@@ -203,7 +309,7 @@ const SuperAdminDashboard = () => {
           </div>
         ) : filteredAdmins.length === 0 ? (
           <div className="row-empty py-5 text-center text-muted">
-            No matching admin found for “{search}”
+            No matching admin found for "{search}"
           </div>
         ) : (
           <div className="table-responsive">
@@ -231,6 +337,15 @@ const SuperAdminDashboard = () => {
                     </td>
                     <td className="text-end">
                       <Button
+                        variant="outline-primary"
+                        size="sm"
+                        className="me-2"
+                        onClick={() => handleEdit(admin)}
+                      >
+                        <i className="bi bi-pencil-square me-1"></i>
+                        Edit
+                      </Button>
+                      <Button
                         variant={admin.isActive ? 'outline-warning' : 'outline-success'}
                         size="sm"
                         className="me-2"
@@ -256,7 +371,6 @@ const SuperAdminDashboard = () => {
         )}
       </div>
 
-      {/* Create Admin Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton className="border-0 pb-0">
           <Modal.Title>
@@ -307,8 +421,8 @@ const SuperAdminDashboard = () => {
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
-                  minLength={6}
-                  placeholder="Minimum 6 characters"
+                  minLength={8}
+                  placeholder="Minimum 8 characters"
                 />
                 <Button
                   variant="link"
@@ -329,6 +443,7 @@ const SuperAdminDashboard = () => {
                   )}
                 </Button>
               </div>
+              <PasswordStrength password={formData.password} />
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -374,6 +489,121 @@ const SuperAdminDashboard = () => {
                 </>
               ) : (
                 'Create Admin'
+              )}
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
+        <Modal.Header closeButton className="border-0 pb-0">
+          <Modal.Title>
+            <i className="bi bi-pencil-square me-2 text-primary"></i>
+            Edit Admin Account
+          </Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={handleEditSubmit}>
+          <Modal.Body>
+            {editError && <Alert variant="danger" className="mb-3">{editError}</Alert>}
+
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                value={editFormData.username}
+                onChange={(e) => setEditFormData({ ...editFormData, username: e.target.value })}
+                required
+                placeholder="Enter username"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                value={editFormData.email}
+                onChange={(e) => setEditFormData({ ...editFormData, email: e.target.value })}
+                required
+                placeholder="Enter email address"
+              />
+            </Form.Group>
+
+            <hr className="my-3" />
+            <p className="text-muted small mb-3">Leave password fields empty to keep the current password.</p>
+
+            <Form.Group className="mb-3">
+              <Form.Label>New Password</Form.Label>
+              <div className="password-input-wrapper">
+                <Form.Control
+                  type={showEditPassword ? 'text' : 'password'}
+                  value={editFormData.newPassword}
+                  onChange={(e) => setEditFormData({ ...editFormData, newPassword: e.target.value })}
+                  placeholder="Leave empty to keep current"
+                />
+                <Button
+                  variant="link"
+                  className="password-toggle-btn"
+                  onClick={() => setShowEditPassword(!showEditPassword)}
+                  tabIndex="-1"
+                >
+                  {showEditPassword ? (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                      <line x1="1" y1="1" x2="23" y2="23"/>
+                    </svg>
+                  ) : (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  )}
+                </Button>
+              </div>
+              {editFormData.newPassword && <PasswordStrength password={editFormData.newPassword} />}
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Confirm New Password</Form.Label>
+              <div className="password-input-wrapper">
+                <Form.Control
+                  type={showEditConfirmPassword ? 'text' : 'password'}
+                  value={editFormData.confirmNewPassword}
+                  onChange={(e) => setEditFormData({ ...editFormData, confirmNewPassword: e.target.value })}
+                  placeholder="Confirm new password"
+                />
+                <Button
+                  variant="link"
+                  className="password-toggle-btn"
+                  onClick={() => setShowEditConfirmPassword(!showEditConfirmPassword)}
+                  tabIndex="-1"
+                >
+                  {showEditConfirmPassword ? (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                      <line x1="1" y1="1" x2="23" y2="23"/>
+                    </svg>
+                  ) : (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  )}
+                </Button>
+              </div>
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer className="border-0">
+            <Button variant="outline-secondary" onClick={() => setShowEditModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" disabled={editSubmitting}>
+              {editSubmitting ? (
+                <>
+                  <Spinner size="sm" animation="border" className="me-2" />
+                  Saving…
+                </>
+              ) : (
+                'Save Changes'
               )}
             </Button>
           </Modal.Footer>

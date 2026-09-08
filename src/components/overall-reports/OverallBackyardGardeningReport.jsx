@@ -4,6 +4,7 @@ import { backyardGardeningApi } from '../../api/reports'
 import { Card, Row, Col, Form, Spinner, Table, Button, Alert } from 'react-bootstrap'
 import { exportReportToDocx } from '../../utils/docxExport'
 import nutritionLogo from '../../assets/nutritionlogo.jpg'
+import { formatDate } from '../../utils/formatDate'
 
 const OverallBackyardGardeningReport = () => {
   const [report, setReport] = useState(null)
@@ -89,7 +90,7 @@ const OverallBackyardGardeningReport = () => {
 
     const infoLines = []
     if (startDate && endDate) {
-      infoLines.push(`DATE: ${new Date(startDate).toLocaleDateString()} - ${new Date(endDate).toLocaleDateString()}`)
+      infoLines.push(`DATE: ${formatDate(startDate)} - ${formatDate(endDate)}`)
     }
 
     const body = (report.barangays || []).map((b, i) => [
@@ -223,7 +224,7 @@ const OverallBackyardGardeningReport = () => {
               <div className="fw-bold">MUNICIPAL NUTRITION COUNCIL</div>
               <div className="fw-bold fs-5 text-success">BACKYARD GARDENING OVERALL REPORT {yearDisplay}</div>
               {startDate && endDate && (
-                <div className="text-muted small">{new Date(startDate).toLocaleDateString()} - {new Date(endDate).toLocaleDateString()}</div>
+                <div className="text-muted small">{formatDate(startDate)} - {formatDate(endDate)}</div>
               )}
             </div>
           </div>

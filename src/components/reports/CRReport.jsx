@@ -5,6 +5,7 @@ import { BARANGAYS } from '../../utils/constants'
 import { Card, Form, Button, Alert, Table, Row, Col, Spinner } from 'react-bootstrap'
 import { exportReportToDocx } from '../../utils/docxExport'
 import nutritionLogo from '../../assets/nutritionlogo.jpg'
+import { formatDate } from '../../utils/formatDate'
 
 const CRReport = () => {
   const { user } = useAuth()
@@ -98,7 +99,7 @@ const CRReport = () => {
       ],
       infoLines: [
         `BARANGAY: ${barangayName}`,
-        `DATE: ${new Date(report.startDate).toLocaleDateString()} - ${new Date(report.endDate).toLocaleDateString()}`
+        `DATE: ${formatDate(report.startDate)} - ${formatDate(report.endDate)}`
       ],
       headers: ['PUROK', 'WITH CR', 'WITHOUT CR'],
       body,
@@ -198,7 +199,7 @@ const CRReport = () => {
                 CONSOLIDATED REPORT ON WITH & WITHOUT CR CY:{report.year}
               </h5>
               <p className="mb-0"><strong>BARANGAY:</strong> {barangay.toUpperCase()}</p>
-              <p className="mb-0"><strong>DATE:</strong> {new Date(report.startDate).toLocaleDateString()} - {new Date(report.endDate).toLocaleDateString()}</p>
+              <p className="mb-0"><strong>DATE:</strong> {formatDate(report.startDate)} - {formatDate(report.endDate)}</p>
             </div>
 
             <Table bordered responsive className="mb-4">

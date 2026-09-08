@@ -5,6 +5,7 @@ import { BARANGAYS } from '../../utils/constants'
 import { Card, Form, Button, Alert, Table, Row, Col, Spinner } from 'react-bootstrap'
 import { exportReportToDocx } from '../../utils/docxExport'
 import nutritionLogo from '../../assets/nutritionlogo.jpg'
+import { formatDate } from '../../utils/formatDate'
 
 const PregnantWomenReport = () => {
   const { user } = useAuth()
@@ -102,7 +103,7 @@ const PregnantWomenReport = () => {
       ],
       infoLines: [
         `BARANGAY: ${barangayName}`,
-        `DATE: ${new Date(report.startDate).toLocaleDateString()} - ${new Date(report.endDate).toLocaleDateString()}`
+        `DATE: ${formatDate(report.startDate)} - ${formatDate(report.endDate)}`
       ],
       headers: ['PUROK', 'HIGH BMI', 'LOW BMI', 'NORMAL BMI'],
       body,
@@ -202,7 +203,7 @@ const PregnantWomenReport = () => {
                 CONSOLIDATED REPORT ON PREGNANT WOMEN {report.year}
               </h5>
               <p className="mb-0"><strong>BARANGAY:</strong> {barangay.toUpperCase()}</p>
-              <p className="mb-0"><strong>DATE:</strong> {new Date(report.startDate).toLocaleDateString()} - {new Date(report.endDate).toLocaleDateString()}</p>
+              <p className="mb-0"><strong>DATE:</strong> {formatDate(report.startDate)} - {formatDate(report.endDate)}</p>
             </div>
 
             <Table bordered responsive className="mb-4">

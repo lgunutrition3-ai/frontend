@@ -9,6 +9,7 @@ import NameSuggestionField from './NameSuggestionField'
 import { GuideToggle, GuidePanel } from './InputGuide'
 import './css/recordTable.css'
 import LoadingOverlay from '../common/LoadingOverlay'
+import { formatDate } from '../../utils/formatDate'
 import { Card, Form, Button, Alert, Table, Row, Col, Pagination } from 'react-bootstrap'
 import { FaSearch, FaTimes, FaFilter } from 'react-icons/fa'
 
@@ -851,7 +852,7 @@ const AnimalDispersalEntry = () => {
                     <td>{record.cowMale}/{record.cowFemale}</td>
                     <td>{record.carabaoMale}/{record.carabaoFemale}</td>
                     <td>{record.otherMale || 0}/{record.otherFemale || 0}</td>
-                    <td>{record.recordedDate ? new Date(record.recordedDate).toLocaleDateString() : 'N/A'}</td>
+                      <td>{formatDate(record.recordedDate)}</td>
                     <td>
                       <Button 
                         variant="primary" 

@@ -4,6 +4,7 @@ import { vegetableSeedApi } from '../../api/reports'
 import { Card, Row, Col, Form, Spinner, Table, Button, Alert } from 'react-bootstrap'
 import { exportReportToDocx } from '../../utils/docxExport'
 import nutritionLogo from '../../assets/nutritionlogo.jpg'
+import { formatDate } from '../../utils/formatDate'
 
 const OverallVegetableSeedReport = () => {
   const [report, setReport] = useState(null)
@@ -160,7 +161,7 @@ const OverallVegetableSeedReport = () => {
 
     const infoLines = []
     if (startDate && endDate) {
-      infoLines.push(`DATE: ${new Date(startDate).toLocaleDateString()} - ${new Date(endDate).toLocaleDateString()}`)
+      infoLines.push(`DATE: ${formatDate(startDate)} - ${formatDate(endDate)}`)
     }
 
     const seedLabel1 = report.seedType1 || '______'
@@ -337,7 +338,7 @@ const OverallVegetableSeedReport = () => {
               <div className="fw-bold">MUNICIPAL NUTRITION COUNCIL</div>
               <div className="fw-bold fs-5 text-success">VEGETABLE SEEDS {yearDisplay}</div>
               {startDate && endDate && (
-                <div className="text-muted small">{new Date(startDate).toLocaleDateString()} - {new Date(endDate).toLocaleDateString()}</div>
+                <div className="text-muted small">{formatDate(startDate)} - {formatDate(endDate)}</div>
               )}
             </div>
           </div>

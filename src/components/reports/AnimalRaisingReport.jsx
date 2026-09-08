@@ -5,6 +5,7 @@ import { BARANGAYS } from '../../utils/constants'
 import { Card, Form, Button, Alert, Table, Row, Col, Spinner } from 'react-bootstrap'
 import { exportReportToDocx } from '../../utils/docxExport'
 import nutritionLogo from '../../assets/nutritionlogo.jpg'
+import { formatDate } from '../../utils/formatDate'
 
 const AnimalRaisingReport = () => {
   const { user } = useAuth()
@@ -130,7 +131,7 @@ const AnimalRaisingReport = () => {
       ],
       infoLines: [
         `BARANGAY: ${barangayName}`,
-        `DATE: ${new Date(report.startDate).toLocaleDateString()} - ${new Date(report.endDate).toLocaleDateString()}`,
+        `DATE: ${formatDate(report.startDate)} - ${formatDate(report.endDate)}`,
         `TOTAL HOUSEHOLD: ${report.total.households}`
       ],
       headers: ['PUROK', 'Chicken M', 'Chicken F', 'Pig M', 'Pig F', 'Goat M', 'Goat F', 'Cow M', 'Cow F', 'Carabao M', 'Carabao F', 'Other M', 'Other F', 'Signature'],
@@ -232,7 +233,7 @@ const AnimalRaisingReport = () => {
                 CONSOLIDATED REPORT ON HOUSEHOLD ANIMAL RAISING {report.year}
               </h5>
               <p className="mb-0"><strong>BARANGAY:</strong> {barangay.toUpperCase()}</p>
-              <p className="mb-0"><strong>DATE:</strong> {new Date(report.startDate).toLocaleDateString()} - {new Date(report.endDate).toLocaleDateString()}</p>
+              <p className="mb-0"><strong>DATE:</strong> {formatDate(report.startDate)} - {formatDate(report.endDate)}</p>
               <p className="mb-0"><strong>TOTAL HOUSEHOLD:</strong> {report.total.households}</p>
             </div>
 

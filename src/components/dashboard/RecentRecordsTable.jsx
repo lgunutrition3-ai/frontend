@@ -1,4 +1,5 @@
 import { Table } from 'react-bootstrap'
+import { formatDate } from '../../utils/formatDate'
 
 const RecentRecordsTable = ({ records = [] }) => {
   const sorted = [...records]
@@ -30,7 +31,7 @@ const RecentRecordsTable = ({ records = [] }) => {
               <td>{r.type}</td>
               <td>{r.barangay}</td>
               <td>{r.purok ? `Purok ${r.purok}` : '-'}</td>
-              <td>{r.recordedDate ? new Date(r.recordedDate).toLocaleDateString() : 'N/A'}</td>
+              <td>{formatDate(r.recordedDate)}</td>
             </tr>
           ))}
         </tbody>

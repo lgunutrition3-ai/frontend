@@ -5,6 +5,7 @@ import { BARANGAYS } from '../../utils/constants'
 import { Card, Form, Button, Alert, Table, Row, Col, Spinner } from 'react-bootstrap'
 import { exportReportToDocx } from '../../utils/docxExport'
 import nutritionLogo from '../../assets/nutritionlogo.jpg'
+import { formatDate } from '../../utils/formatDate'
 
 const ChildRecordsReport = () => {
   const { user } = useAuth()
@@ -107,7 +108,7 @@ const ChildRecordsReport = () => {
       ],
       infoLines: [
         `BARANGAY: ${barangayName}`,
-        `DATE: ${new Date(report.startDate).toLocaleDateString()} - ${new Date(report.endDate).toLocaleDateString()}`
+        `DATE: ${formatDate(report.startDate)} - ${formatDate(report.endDate)}`
       ],
       headers: ['PUROK', '6 - 11 MONTHS', '12 - 59 MONTHS', 'UNDERWEIGHT AND SUW'],
       body,
@@ -209,7 +210,7 @@ const ChildRecordsReport = () => {
                 CONSOLIDATED REPORT ON GIVEN VITAMIN A SUPPLEMENTARY CY:{report.year}
               </h5>
               <p className="mb-0"><strong>BARANGAY:</strong> {report.barangay.toUpperCase()}</p>
-              <p className="mb-0"><strong>DATE:</strong> {new Date(report.startDate).toLocaleDateString()} - {new Date(report.endDate).toLocaleDateString()}</p>
+              <p className="mb-0"><strong>DATE:</strong> {formatDate(report.startDate)} - {formatDate(report.endDate)}</p>
             </div>
 
             <Table bordered responsive className="mb-4">

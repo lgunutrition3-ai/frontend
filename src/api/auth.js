@@ -24,6 +24,10 @@ export const superAdminApi = {
     const response = await api.post('/superadmin/admins', data)
     return response.data
   },
+  updateAdmin: async (id, data) => {
+    const response = await api.put(`/superadmin/admins/${id}`, data)
+    return response.data
+  },
   toggleAdmin: async (id) => {
     const response = await api.put(`/superadmin/admins/${id}/toggle`)
     return response.data

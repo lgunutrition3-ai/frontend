@@ -4,6 +4,7 @@ import { childRecordApi } from '../../api/auth'
 import { Card, Row, Col, Form, Spinner, Table, Button, Alert } from 'react-bootstrap'
 import { exportReportToDocx } from '../../utils/docxExport'
 import nutritionLogo from '../../assets/nutritionlogo.jpg'
+import { formatDate } from '../../utils/formatDate'
 
 const OverallChildRecordsReport = () => {
   const [report, setReport] = useState(null)
@@ -96,7 +97,7 @@ const OverallChildRecordsReport = () => {
 
     const infoLines = []
     if (startDate && endDate) {
-      infoLines.push(`DATE: ${new Date(startDate).toLocaleDateString()} - ${new Date(endDate).toLocaleDateString()}`)
+      infoLines.push(`DATE: ${formatDate(startDate)} - ${formatDate(endDate)}`)
     }
 
     const body = (report.barangays || []).map((b, i) => [
@@ -230,7 +231,7 @@ const OverallChildRecordsReport = () => {
               <div className="fw-bold">MUNICIPAL NUTRITION COUNCIL</div>
               <div className="fw-bold fs-5 text-success">VITAMIN A {yearDisplay}</div>
               {startDate && endDate && (
-                <div className="text-muted small">{new Date(startDate).toLocaleDateString()} - {new Date(endDate).toLocaleDateString()}</div>
+                <div className="text-muted small">{formatDate(startDate)} - {formatDate(endDate)}</div>
               )}
             </div>
           </div>

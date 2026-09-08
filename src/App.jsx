@@ -4,12 +4,13 @@ import Navbar from './components/common/Navbar'
 import ProtectedRoute from './components/common/ProtectedRoute'
 import Login from './pages/Login'
 import SuperAdminLogin from './pages/SuperAdminLogin'
-import Dashboard from './pages/Dashboard'
+import StaffDashboard from './pages/StaffDashboard'
+import AdminDashboard from './pages/AdminDashboard'
+import SuperAdminDashboard from './pages/SuperAdminDashboard'
 import AllRecords from './pages/AllRecords'
 import BarangayReportLayout from './components/layout/BarangayReportLayout'
 import OverallReportLayout from './components/layout/OverallReportLayout'
 import AdminStaff from './pages/AdminStaff'
-import SuperAdminDashboard from './pages/SuperAdminDashboard'
 
 import StaffLayout from './components/layout/StaffLayout'
 import ChildRecordsEntry from './components/staff/ChildRecordsEntry'
@@ -76,7 +77,7 @@ function App() {
             <Routes>
               <Route path="/dashboard" element={
                 <ProtectedRoute>
-                  <Dashboard />
+                  {user?.role === 'staff' ? <StaffDashboard /> : <AdminDashboard />}
                 </ProtectedRoute>
               } />
               <Route path="/barangay-report" element={

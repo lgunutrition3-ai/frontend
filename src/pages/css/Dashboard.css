@@ -296,4 +296,30 @@
   .stat-card .stat-value {
     font-size: 24px;
   }
+
+  .dashboard-table thead th {
+    padding: 10px 12px;
+    font-size: 10px;
+  }
+
+  .dashboard-table tbody td {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .dashboard-table .col-date-hide {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-table thead th {
+    padding: 8px 8px;
+    font-size: 9px;
+  }
+
+  .dashboard-table tbody td {
+    padding: 8px 8px;
+    font-size: 11px;
+  }
 }
